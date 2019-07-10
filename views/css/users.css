@@ -1,0 +1,184 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Poppins', 'Sans-Serif';
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.mainContainer {
+  width: 90%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.top, .bottom {
+  width: 100%;
+  height: 12.5%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.containerTitle {
+  width: 90%;
+  height: 100%;
+  font-size: 2em;
+  background-color: #C4CAD0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-family: 'Merriweather', 'Serif';
+}
+
+.buttonContainer, .searchContainer {
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-right: 10%;
+}
+
+.buttonLabel {
+  display: inline-block;
+  margin-right: 2%;
+}
+
+.sortButton {
+  display: inline-block;
+  margin: 0 2px 0 2px;
+}
+
+.searchContainer {
+  height: 10%;
+}
+
+.userInput, .userInputSelect {
+  width: 40%;
+  font-size: 1em;
+}
+
+.middle {
+  width: 100%;
+  height: 75%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 90%;
+  height: 100%;
+  background-color: #F9FCFF;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.inputLabel {
+  margin: 1% 0 0.75% 0;
+  width: 25%;
+  height: 5%;
+  font-size: 1.25em;
+}
+
+.userInputSelect {
+  width: 40%;
+  height: 7%;
+}
+
+.inputSubmit {
+  width: 20%;
+  height: 8%;
+  margin-top: 2%;
+}
+
+li {
+  list-style-type: none;
+}
+
+.userList {
+  width: 80%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.userContainer {
+  width: 100%;
+  background-color: #F9FCFF;
+  margin: 1% 0 0 0;
+  border: 1px solid #343434;
+  padding: 2%;
+  font-size: 1.1em;
+}
+
+.userValue {
+  width: 100%;
+  margin: 1% 0 1% 0;
+}
+
+.editButton {
+  width: 20%;
+  height: 5%;
+}
+/*# sourceMappingURL=users.css.map */

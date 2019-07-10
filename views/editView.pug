@@ -1,0 +1,30 @@
+//- include ./mixins/maincontent.pug
+doctype html
+html
+    head
+        link(rel='stylesheet' href='/css/editView.css' type="text/css")
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Merriweather|Poppins&display=swap')
+        title User Manager
+    body
+        .mainContainer
+            .top
+                .containerTitle Edit User
+            .middle
+                form.container(action="/updateUser" method="post")
+                    p.inputLabel User Id:
+                    input.userInput(type='text' id='Id' name='Id' value= userid readonly='true')
+                    p.inputLabel Name:
+                    input.userInput(type='text' id='Name' name='Name' value= name)
+                    p.inputLabel Age:
+                    input.userInput(type='number' id='Age' name='Age' value= age)
+                    p.inputLabel Email Address:
+                    input.userInput(type='email' id='Email' name='Email' value= email)
+                    p.inputLabel Role: 
+                    select.userInputSelect(name='Role')
+                        option(value='Student') Student
+                        option(value='Admin') Admin
+
+                    //- p.inputLabel User ID:
+                    //- input.userInput(type='text' id='UserId' name='UserId' placeholder='User ID' )
+                    button.inputSubmit(type='submit') Update User
+            .bottom

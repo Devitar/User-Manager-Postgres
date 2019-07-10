@@ -1,0 +1,30 @@
+//- include ./mixins/maincontent.pug
+doctype html
+html
+    head
+        link(rel='stylesheet' href='/css/newusers.css' type="text/css")
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Merriweather|Poppins&display=swap')
+        title User Manager
+    body
+        .mainContainer
+            .top
+                .containerTitle Create a User
+            .middle
+                form.container(action="/addUser" method="post")
+                    p.inputLabel First Name:
+                    input.userInput(type='text' id='FirstName' name='FirstName' placeholder='First Name')
+                    p.inputLabel Last Name:
+                    input.userInput(type='text' id='LastName' name='LastName' placeholder="Last Name")
+                    p.inputLabel Age:
+                    input.userInput(type='number' id='Age' name='Age' placeholder='Age')
+                    p.inputLabel Email Address:
+                    input.userInput(type='email' id='Email' name='Email' placeholder='Email Address')
+                    p.inputLabel Role: 
+                    select.userInputSelect(name='Role')
+                        option(value='Student') Student
+                        option(value='Admin') Admin
+
+                    //- p.inputLabel User ID:
+                    //- input.userInput(type='text' id='UserId' name='UserId' placeholder='User ID' )
+                    button.inputSubmit(type='submit') Create User
+            .bottom

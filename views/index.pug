@@ -1,0 +1,9 @@
+include ./mixins/maincontent.pug
+
+html
+    link(href='./css/index.css', rel='stylesheet')
+    head
+        title= title
+    body
+        h1= message
+        +maincontent(blah)

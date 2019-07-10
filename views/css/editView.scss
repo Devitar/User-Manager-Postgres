@@ -1,0 +1,88 @@
+$dark: #343434;
+$grey: #878C8F;
+$lightgrey: #C4CAD0;
+$light: #F9FCFF;
+$accent: #30C5FF;
+
+html,body{
+    width: 100%;
+    height: 100%;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainContainer{
+    width: 80%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.top,.bottom{
+    width: 100%;
+    height: 12.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerTitle{
+    width: 90%;
+    height: 100%;
+    font-size: 2em;
+    background-color: $lightgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Merriweather', 'Serif';
+}
+
+.middle{
+    width: 100%;
+    height: 75%;
+    display: flex;
+    justify-content: center;
+}
+
+.container{
+    width: 90%;
+    height: 100%;
+    background-color: $light;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputLabel{
+    margin: 1% 0 .75% 0;
+    width: 25%;
+    height: 5%;
+    font-family: 'Poppins', 'Sans-Serif';
+    font-size: 1.25em;
+}
+
+.userInput{
+    width: 40%;
+    height: 6%;
+    font-family: 'Poppins', 'Sans-Serif';
+    font-size: 1em;
+}
+
+.userInputSelect {
+    @extend .userInput;
+    width: 40%;
+    height: 7%;
+}
+
+.inputSubmit{
+    width: 20%;
+    height: 8%;
+    margin-top: 2%;
+    font-family: 'Poppins', 'Sans-Serif';
+}

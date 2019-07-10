@@ -1,0 +1,29 @@
+html
+    head
+        link(rel='stylesheet' href='/css/users.css' type="text/css")
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Merriweather|Poppins&display=swap')
+        title User Manager
+    body
+        .mainContainer
+            .top
+                .containerTitle All Users
+                .buttonContainer
+                    p.buttonLabel Sort by Name
+                    button(type='button' class="sortButton" onclick=`sortName('Ascending')`) Sort Ascending
+                    button(type='button' class="sortButton" onclick=`sortName('Descending')`) Sort Descending
+                form.searchContainer
+                    p.buttonLabel Search by Name
+                    input.userInput(type='text' id='Name' name='Name' placeholder='Name')
+                    button(type='button' class="sortButton" onclick=`searchName()`) Search
+            .middle
+                ul(class="userList")
+                    each user in userData
+                        -var userId= user.UserId
+                        div(class="userContainer" id=`${userId}`)
+                            each value, key in user
+                                li(class="userValue")= key + ': ' + value
+                            button(type='button' class="editButton" onclick=`editView('${userId}')`) Edit
+                            button(type='button' class="editButton" onclick=`deleteView('${userId}')`) Delete
+            .bottom
+
+    script(src='/scripts/users.js')

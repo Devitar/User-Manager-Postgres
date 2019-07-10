@@ -1,0 +1,142 @@
+$dark: #343434;
+$grey: #878C8F;
+$lightgrey: #C4CAD0;
+$light: #F9FCFF;
+$accent: #30C5FF;
+
+html,body{
+    width: 100%;
+    height: 100%;
+    font-family: 'Poppins', 'Sans-Serif';
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainContainer{
+    width: 90%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.top,.bottom{
+    width: 100%;
+    height: 12.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.containerTitle{
+    width: 90%;
+    height: 100%;
+    font-size: 2em;
+    background-color: $lightgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Merriweather', 'Serif';
+}
+
+.buttonContainer{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10%;
+}
+
+.buttonLabel{
+    display: inline-block;
+    margin-right: 2%;
+}
+
+.sortButton{
+    display: inline-block;
+    margin: 0 2px 0 2px;
+}
+
+.searchContainer{
+    @extend .buttonContainer;
+    height: 10%;
+}
+
+.userInput{
+    width: 40%;
+    font-size: 1em;
+}
+
+.middle{
+    width: 100%;
+    height: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.container{
+    width: 90%;
+    height: 100%;
+    background-color: $light;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputLabel{
+    margin: 1% 0 0.75% 0;
+    width: 25%;
+    height: 5%;
+    font-size: 1.25em;
+}
+
+.userInputSelect {
+    @extend .userInput;
+    width: 40%;
+    height: 7%;
+}
+
+.inputSubmit{
+    width: 20%;
+    height: 8%;
+    margin-top: 2%;
+}
+
+li{
+    list-style-type: none;
+}
+
+.userList{
+    width: 80%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.userContainer{
+    width: 100%;
+    background-color: $light;
+    margin: 1% 0 0 0;
+    border: 1px solid $dark;
+    padding: 2%;
+    font-size: 1.1em;
+}
+
+.userValue{
+    width: 100%;
+    margin: 1% 0 1% 0;
+}
+
+.editButton {
+    width: 20%;
+    height: 5%;
+}
