@@ -1,42 +1,45 @@
 //https://codeburst.io/getting-started-with-pug-template-engine-e49cfa291e33
 //https://coolors.co/343434-fcf7ff-c4cad0-878c8f-30c5ff
 
-//appdb
-//depfor-3gEswe-dewkyp
-//mongodb+srv://appdb:depfor-3gEswe-dewkyp@cluster0-e8ufm.mongodb.net/test?retryWrites=true&w=majority
-
 const express = require('express');
 const path = require('path');
-const mongoose = require('mongoose');
 const uuid = require('uuid/v4');
 const querystring = require('querystring');
+
+
+const { Client } = require('pg');
+
+const client = new Client({
+    user: 'zyhpparcerwdfk',
+    host: 'ec2-174-129-229-106.compute-1.amazonaws.com',
+    database: 'd56u70oqj72vni',
+    password: '9d01bfbd06c7517ebf08b30b4e0c99104d7d4921a92297ccaabb28eae2134ba3',
+    port: 5432
+});
+client.connect();
+
+const createTableText = `
+CREATE TABLE IF NOT EXISTS users (
+  id PRIMARY KEY,
+  name varchar(50),
+  email varchar(50),
+  age int,
+  role varchar(15)
+);
+`
+client.query(createTableText);
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.set('useFindAndModify', false);
 
-const userSchema = new mongoose.Schema({
-    id: String,
-    name: String,
-    email: String,
-    role: String,
-    age: Number,//{ type: Number, min: 18, max: 70 },
-    createdDate: { type: Date, default: Date.now }
-});
-const user = mongoose.model('userCollection', userSchema);
+// client.query('SELECT $1::text as message', ['Hello world!'], (err, res) => {
+//     console.log(err ? err.stack : res.rows[0].message); // Hello World!
+//     client.end();
+// });
 
-//NYUP95V1CNl4nrqV
-mongoose.connect('mongodb+srv://appdb:NYUP95V1CNl4nrqV@cluster0-szlfg.mongodb.net/users?retryWrites=true&w=majority',
-
-{useNewUrlParser: true});
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-    console.log('Database connected.');
-});
 
 const viewsFolder = path.join(__dirname, 'views');
 
@@ -53,58 +56,70 @@ app.get('/', (req, res) => {
 
 
 app.post('/addUser', (req, res) => {
-    const newUser = new user();
-    newUser.id = uuid();
-    newUser.name = req.body.FirstName + " " + req.body.LastName;
-    newUser.email = req.body.Email;
-    newUser.age = req.body.Age;
-    newUser.role = req.body.Role;
-    newUser.save((err, data) => {
-        if (err) {
-            return console.error(err);
-        };
-        res.redirect('/users');
-    });
+    // const newUser = new user();
+    // newUser.id = uuid();
+    // newUser.name = req.body.FirstName + " " + req.body.LastName;
+    // newUser.email = req.body.Email;
+    // newUser.age = req.body.Age;
+    // newUser.role = req.body.Role;
+    // newUser.save((err, data) => {
+    //     if (err) {
+    //         return console.error(err);
+    //     };
+    //     res.redirect('/users');
+    // });
+
+    const newUser = new User(
+        uuid(),
+        newUser.name = req.body.FirstName + " " + req.body.LastName,
+        newUser.email = req.body.Email,
+        newUser.age = req.body.Age,
+        newUser.role = req.body.Role
+    );
+    client.query('INSERT INTO users(id, name, email, age, role) VALUES($1, $2, $3, $4, $5)', [newUser.id, newUser.name, newUser.email, newUser.age, newUser.role]);
 });
 
 app.get('/users', (req, res) => {
     let allUsers = [];
+    const { rows } = client.query('SELECT * FROM users');
     if (req.query.Name){
         let qname = req.query.Name;
-        user.find({'name': {$regex: qname, "$options": "i" }}, function (err, users) {
-            if (err) return console.error(err);
-            users.forEach(user => {
-                if (user.name.includes(qname)){
-                    allUsers.push(
-                        {
-                            UserId: user.id,
-                            Name: user.name,
-                            Email: user.email,
-                            Age: user.age,
-                            Role: user.role
-                        }
-                    );
-                };
-            });
-            res.render('users', { userData: allUsers });
-        });
+        
+        // user.find({'name': {$regex: qname, "$options": "i" }}, function (err, users) {
+        //     if (err) return console.error(err);
+        //     users.forEach(user => {
+        //         if (user.name.includes(qname)){
+        //             allUsers.push(
+        //                 {
+        //                     UserId: user.id,
+        //                     Name: user.name,
+        //                     Email: user.email,
+        //                     Age: user.age,
+        //                     Role: user.role
+        //                 }
+        //             );
+        //         };
+        //     });
+        //     res.render('users', { userData: allUsers });
+        // });
     }else{
-        user.find(function (err, users) {
-            if (err) return console.error(err);
-            users.forEach(user => {
-                allUsers.push(
-                    {
-                        UserId: user.id,
-                        Name: user.name,
-                        Email: user.email,
-                        Age: user.age,
-                        Role: user.role
-                    }
-                );
-            });
-            res.render('users', { userData: allUsers });
-        });
+        // user.find(function (err, users) {
+        //     if (err) return console.error(err);
+        //     users.forEach(user => {
+        //         allUsers.push(
+        //             {
+        //                 UserId: user.id,
+        //                 Name: user.name,
+        //                 Email: user.email,
+        //                 Age: user.age,
+        //                 Role: user.role
+        //             }
+        //         );
+        //     });
+        //     res.render('users', { userData: allUsers });
+        // });
     }
+    console.log(rows);
 });
 
 app.get('/users/editView', (req, res) => {
