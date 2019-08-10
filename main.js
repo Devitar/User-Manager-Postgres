@@ -25,7 +25,7 @@ const resetTableString = `
     DROP TABLE users;
 `;
 
-const createTableText = `
+const createTableString = `
 CREATE TABLE IF NOT EXISTS users (
   id varchar(50),
   name varchar(50),
@@ -39,23 +39,14 @@ CREATE TABLE IF NOT EXISTS users (
 //     if (err) throw err;
 // });
 
-client.query(createTableText, (err, res) => {
+client.query(createTableString, (err) => {
     if (err) throw err;
-    for (let row of res.rows) {
-        console.log(JSON.stringify(row));
-    };
 });
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
-// client.query('SELECT $1::text as message', ['Hello world!'], (err, res) => {
-//     console.log(err ? err.stack : res.rows[0].message); // Hello World!
-//     client.end();
-// });
 
 
 const viewsFolder = path.join(__dirname, 'views');
@@ -72,24 +63,24 @@ app.get('/', (req, res) => {
 });
 
 function FormatNumberLength(num, length) {
-    var r = "" + num;
-    while (r.length < length) {
-        r = "0" + r;
-    }
-    return r;
+    const strNum = num.toString();
+    const result = Number(strNum.slice(0, length));
+    return result;
+}
+function FormatStringLength(str, length) {
+    const result = str.slice(0, length);
+    return result;
 }
 
-
 app.post('/addUser', (req, res) => {
-    console.log('Add user');
     const newUser = new User(
         uuid(),
-        req.body.FirstName + " " + req.body.LastName,
-        req.body.Email,
+        FormatStringLength(req.body.FirstName + " " + req.body.LastName, 50),
+        FormatStringLength(req.body.Email, 50),
         FormatNumberLength(req.body.Age, 3),
         req.body.Role
     );
-    client.query('INSERT INTO users(id, name, email, age, role) VALUES($1, $2, $3, $4, $5)', [newUser.id, newUser.name, newUser.email, newUser.age, newUser.role], (err, result) => {
+    client.query('INSERT INTO users(id, name, email, age, role) VALUES($1, $2, $3, $4, $5)', [newUser.id, newUser.name, newUser.email, newUser.age, newUser.role], (err) => {
         if (err) 
             throw err;
         else{
@@ -99,33 +90,41 @@ app.post('/addUser', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
-    console.log('Get users');
     const allUsers = [];
-    client.query('SELECT * FROM users', (err, response) => {
-        if (err) throw err;
-        const allRows = response.rows;
-        console.log(allRows);
-        if (req.query.Name){
-            let qname = req.query.Name;
-            
-            // user.find({'name': {$regex: qname, "$options": "i" }}, function (err, users) {
-            //     if (err) return console.error(err);
-            //     users.forEach(user => {
-            //         if (user.name.includes(qname)){
-            //             allUsers.push(
-            //                 {
-            //                     UserId: user.id,
-            //                     Name: user.name,
-            //                     Email: user.email,
-            //                     Age: user.age,
-            //                     Role: user.role
-            //                 }
-            //             );
-            //         };
-            //     });
-            //     res.render('users', { userData: allUsers });
-            // });
-        }else{
+
+    if (req.query.Name){
+        let qname = decodeURIComponent(req.query.Name).toLowerCase();
+        console.log(qname);
+        // const nameQuery = {
+        //     name: 'getUser',
+        //     text: 'SELECT * FROM users WHERE name = $1',
+        //     values: [qname],
+        // }
+        // client.query(nameQuery, (err, result) => {
+        client.query('SELECT * FROM users', (err, response) => {
+            if (err) throw err;
+            const allRows = response.rows;
+            let filteredUsers = allRows.filter((v) => {
+                console.log(v.name, v.name.toLowerCase().includes(qname) );
+                return v.name.toLowerCase().includes(qname);
+            });
+            filteredUsers.forEach(user => {
+                allUsers.push(
+                    {
+                        UserId: user.id,
+                        Name: user.name,
+                        Email: user.email,
+                        Age: user.age,
+                        Role: user.role
+                    }
+                );
+            });
+        });
+        res.render('users', { userData: allUsers });
+    }else{
+        client.query('SELECT * FROM users', (err, response) => {
+            if (err) throw err;
+            const allRows = response.rows;
             allRows.forEach(user => {
                 allUsers.push(
                     {
@@ -138,8 +137,8 @@ app.get('/users', (req, res) => {
                 );
             });
             res.render('users', { userData: allUsers });
-        } 
-    });
+        });
+    };
 });
 
 app.get('/users/editView', (req, res) => {
