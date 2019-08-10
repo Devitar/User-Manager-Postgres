@@ -6,5 +6,6 @@ class User {
         this.age = age;
         this.role = role;
     }
-    
 }
+
+module.exports = User;
