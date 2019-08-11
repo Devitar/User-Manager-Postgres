@@ -14,3 +14,11 @@ function searchName(){
     let name = document.getElementById('Name').value;
     window.location.href = `/users/?Name=${name}`;
 };
+
+function newUser(){
+    window.location.href = `/`;
+}
+
+function goToUsers(){
+    window.location.href = `/users/`;
+}

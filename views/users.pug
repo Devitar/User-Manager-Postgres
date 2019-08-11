@@ -5,12 +5,14 @@ html
         title User Manager
     body
         .mainContainer
+            .containerTitle All Users
             .top
-                .containerTitle All Users
                 .buttonContainer
-                    p.buttonLabel Sort by Name
+                    p.buttonLabel
                     button(type='button' class="sortButton" onclick=`sortName('Ascending')`) Sort Ascending
                     button(type='button' class="sortButton" onclick=`sortName('Descending')`) Sort Descending
+                    button(type='button' class='sortButton' onclick=`newUser()`) New User
+                    button(type='button' class='sortButton' onclick=`goToUsers()`) Show All Users
                 form.searchContainer
                     p.buttonLabel Search by Name
                     input.userInput(type='text' id='Name' name='Name' placeholder='Name')
