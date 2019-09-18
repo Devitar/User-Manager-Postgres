@@ -7,10 +7,10 @@ const uuid = require('uuid/v4');
 const querystring = require('querystring');
 const User = require('./user.js');
 
-
 const { Client } = require('pg');
 
-const connectionStr = 'postgres://zyhpparcerwdfk:9d01bfbd06c7517ebf08b30b4e0c99104d7d4921a92297ccaabb28eae2134ba3@ec2-174-129-229-106.compute-1.amazonaws.com:5432/d56u70oqj72vni';
+const connectionStr = process.env.PG_Connection_String;
+
 const client = new Client({connectionString: connectionStr, ssl: true});
 client.connect();
 
@@ -87,12 +87,6 @@ app.get('/users', (req, res) => {
 
     if (req.query.Name) {
         let qname = decodeURIComponent(req.query.Name).toLowerCase();
-        // const nameQuery = {
-        //     name: 'getUser',
-        //     text: 'SELECT * FROM users WHERE name = $1',
-        //     values: [qname],
-        // }
-        // client.query(nameQuery, (err, result) => {
         client.query('SELECT * FROM users', (err, response) => {
             if (err) throw err;
             const allRows = response.rows;
@@ -146,14 +140,6 @@ app.get('/users/editView', (req, res) => {
 });
 
 app.post('/updateUser', (req, res) => {
-    // user.findOneAndUpdate({ id: req.body.Id }, {
-    //     name: req.body.Name, 
-    //     email: req.body.Email,
-    //     age: Number(req.body.Age),
-    //     role: req.body.Role
-    // }, () => {
-    //     res.redirect('/users');
-    // });
     const usrId = req.body.Id;
     const updateQuery = {
         text: 
