@@ -1,11 +1,13 @@
 //https://codeburst.io/getting-started-with-pug-template-engine-e49cfa291e33
 //https://coolors.co/343434-fcf7ff-c4cad0-878c8f-30c5ff
 
+//git push origin master
+
 const express = require('express');
 const path = require('path');
 const uuid = require('uuid/v4');
-const querystring = require('querystring');
 const User = require('./user.js');
+const xssFilters = require('xss-filters');
 
 const { Client } = require('pg');
 
@@ -68,9 +70,9 @@ function FormatStringLength(str, length) {
 app.post('/addUser', (req, res) => {
     const newUser = new User(
         uuid(),
-        FormatStringLength(req.body.FirstName + " " + req.body.LastName, 50),
-        FormatStringLength(req.body.Email, 50),
-        FormatNumberLength(req.body.Age, 3),
+        FormatStringLength(xssFilters.inHTMLData(req.body.FirstName) + " " + xssFilters.inHTMLData(req.body.LastName), 50),
+        FormatStringLength(xssFilters.inHTMLData(req.body.Email), 50),
+        FormatNumberLength(xssFilters.inHTMLData(req.body.Age), 3),
         req.body.Role
     );
     client.query('INSERT INTO users(id, name, email, age, role) VALUES($1, $2, $3, $4, $5)', [newUser.id, newUser.name, newUser.email, newUser.age, newUser.role], (err) => {
@@ -147,7 +149,13 @@ app.post('/updateUser', (req, res) => {
             SET name = $2, email = $3, age = $4, role = $5
             WHERE
                 id = $1;`,
-        values: [usrId, req.body.Name, req.body.Email, req.body.Age, req.body.Role],
+        values: [
+            usrId, 
+            xssFilters.inHTMLData(req.body.Name), 
+            xssFilters.inHTMLData(req.body.Email), 
+            xssFilters.inHTMLData(req.body.Age), 
+            xssFilters.inHTMLData(req.body.Role)
+        ],
     };
     client.query(updateQuery, (err) => {
         if (err) throw err;
